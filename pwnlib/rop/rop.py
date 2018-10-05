@@ -1014,9 +1014,10 @@ class ROP(object):
 
         hashes = []
 
+        sha256 = hashlib.sha256()
         for elf in self.elfs:
-            sha256 = hashlib.sha256(elf.get_data()).hexdigest()
-            hashes.append(sha256)
+            sha256.update(elf.get_data())
+        hashes.append(sha256.hexdigest())
 
         return os.path.join(cachedir, '_'.join(hashes))
 
